@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert, Modal, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, Modal, FlatList, TextInput } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { db, auth } from '../../../FirebaseConfig';
 import { doc, getDoc, collection, addDoc, query, where, onSnapshot, orderBy, limit, getDocs, updateDoc } from 'firebase/firestore';
@@ -12,8 +12,10 @@ interface LeaveApplicationScreenProps {
 const LeaveApplicationScreen: React.FC<LeaveApplicationScreenProps> = ({ navigation }) => {
     const [userRole, setUserRole] = useState<string | null>(null);
     const [companyId, setCompanyId] = useState<string | null>(null);
-    const [leaveRequests, setLeaveRequests] = useState<Array<{ id: string; email: string; date: any; status: string }>>([]);
+    const [leaveRequests, setLeaveRequests] = useState<Array<{ id: string; email: string; date: any; status: string; reason: string }>>([]);
     const [modalVisible, setModalVisible] = useState<boolean>(false);
+    const [leaveReason, setLeaveReason] = useState<string>('');
+    const [reasonModalVisible, setReasonModalVisible] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchUserRole = async () => {
@@ -44,16 +46,32 @@ const LeaveApplicationScreen: React.FC<LeaveApplicationScreenProps> = ({ navigat
                         return;
                     }
                 }
+                setReasonModalVisible(true);
+            } else {
+                Alert.alert('Error', 'User not authenticated or company ID missing.');
+            }
+        } catch (error) {
+            console.error('Error checking leave request: ', error);
+            Alert.alert('Error', 'Error checking leave request. Please try again.');
+        }
+    };
+
+    const submitLeaveRequest = async () => {
+        try {
+            const user = auth.currentUser;
+            if (user && companyId) {
+                const leaveCollectionRef = collection(db, 'leaveRequests');
                 await addDoc(leaveCollectionRef, {
                     userId: user.uid,
                     email: user.email,
                     companyId: companyId,
                     date: new Date(),
                     status: 'pending',
+                    reason: leaveReason,
                 });
+                setReasonModalVisible(false);
+                setLeaveReason('');
                 Alert.alert('Success', 'Leave request submitted successfully.');
-            } else {
-                Alert.alert('Error', 'User not authenticated or company ID missing.');
             }
         } catch (error) {
             console.error('Error submitting leave request: ', error);
@@ -66,7 +84,7 @@ const LeaveApplicationScreen: React.FC<LeaveApplicationScreenProps> = ({ navigat
         if (companyId) {
             const q = query(collection(db, 'leaveRequests'), where('companyId', '==', companyId), orderBy('date', 'desc'));
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
-                const requests: Array<{ id: string; email: string; date: any; status: string }> = [];
+                const requests: Array<{ id: string; email: string; date: any; status: string; reason: string }> = [];
                 querySnapshot.forEach((doc) => {
                     requests.push({ id: doc.id, ...doc.data() } as any);
                 });
@@ -109,7 +127,7 @@ const LeaveApplicationScreen: React.FC<LeaveApplicationScreenProps> = ({ navigat
         }
     };
 
-    const renderLeaveRequest = ({ item }: { item: { id: string; email: string; date: any; status: string } }) => {
+    const renderLeaveRequest = ({ item }: { item: { id: string; email: string; date: any; status: string; reason: string } }) => {
         const formattedDate = item.date?.seconds
             ? format(new Date(item.date.seconds * 1000), 'PPpp')
             : 'Unknown date';
@@ -117,6 +135,7 @@ const LeaveApplicationScreen: React.FC<LeaveApplicationScreenProps> = ({ navigat
             <View style={styles.recordContainer}>
                 <Text style={styles.recordText}>Email: {item.email}</Text>
                 <Text style={styles.recordText}>Date: {formattedDate}</Text>
+                <Text style={styles.recordText}>Reason: {item.reason}</Text>
                 <Text style={styles.recordText}>Status: {item.status}</Text>
                 {item.status === 'pending' && (
                     <View style={styles.buttonContainer}>
@@ -154,6 +173,38 @@ const LeaveApplicationScreen: React.FC<LeaveApplicationScreenProps> = ({ navigat
             >
                 <Text style={styles.buttonText}>Dashboard</Text>
             </TouchableOpacity>
+
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={reasonModalVisible}
+                onRequestClose={() => setReasonModalVisible(false)}
+            >
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalContainer}>
+                        <Text style={styles.modalTitle}>Enter Leave Reason</Text>
+                        <TextInput
+                            style={styles.textInput}
+                            placeholder="Reason for leave"
+                            value={leaveReason}
+                            onChangeText={setLeaveReason}
+                            multiline
+                        />
+                        <TouchableOpacity
+                            style={[styles.button, styles.submitButton]}
+                            onPress={submitLeaveRequest}
+                        >
+                            <Text style={styles.buttonText}>Submit</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[styles.button, styles.closeButton]}
+                            onPress={() => setReasonModalVisible(false)}
+                        >
+                            <Text style={styles.buttonText}>Cancel</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
 
             <Modal
                 animationType="slide"
@@ -247,6 +298,9 @@ const styles = StyleSheet.create({
     closeButton: {
         backgroundColor: '#dc3545',
     },
+    submitButton: {
+        backgroundColor: '#28a745',
+    },
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -259,6 +313,15 @@ const styles = StyleSheet.create({
     rejectButton: {
         backgroundColor: '#dc3545',
         width: '48%',
+    },
+    textInput: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 10,
+        padding: 10,
+        marginBottom: 20,
+        height: 80,
+        textAlignVertical: 'top',
     },
 });
 
