@@ -9,7 +9,7 @@ interface ResumesDashboardProps {
 }
 
 const ResumesScreen: React.FC<ResumesDashboardProps> = ({ navigation }) => {
-    const [joinRequests, setJoinRequests] = useState<Array<{ id: string; userId: string; userEmail: string; companyId: string; companyName: string; status: string }>>([]);
+    const [joinRequests, setJoinRequests] = useState<Array<{ id: string; userId: string; userEmail: string; companyId: string; companyName: string; status: string; description: string }>>([]);
     const [companyId, setCompanyId] = useState<string | null>(null);
 
     useEffect(() => {
@@ -36,6 +36,7 @@ const ResumesScreen: React.FC<ResumesDashboardProps> = ({ navigation }) => {
                     companyId: doc.data().companyId,
                     companyName: doc.data().companyName,
                     status: doc.data().status,
+                    description: doc.data().description, // Include description
                 }));
                 setJoinRequests(requestsList);
             };
@@ -84,12 +85,13 @@ const ResumesScreen: React.FC<ResumesDashboardProps> = ({ navigation }) => {
         }
     };
 
-    const renderJoinRequest = ({ item }: { item: { id: string; userId: string; userEmail: string; companyId: string; companyName: string; status: string } }) => {
+    const renderJoinRequest = ({ item }: { item: { id: string; userId: string; userEmail: string; companyId: string; companyName: string; status: string; description: string } }) => {
         return (
             <View style={styles.requestContainer}>
                 <Text style={styles.requestText}>Email: {item.userEmail}</Text>
                 <Text style={styles.requestText}>Company: {item.companyName}</Text>
                 <Text style={styles.requestText}>Status: {item.status}</Text>
+                <Text style={styles.requestText}>Description: {item.description}</Text>
                 {item.status === 'pending' && (
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity
