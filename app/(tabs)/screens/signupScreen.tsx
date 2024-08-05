@@ -1,15 +1,10 @@
-import React, { useState } from 'react';
-import { SafeAreaView, Text, StyleSheet, TouchableOpacity, Alert, TextInput, LogBox } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { SafeAreaView, Text, StyleSheet, TouchableOpacity, TextInput, View, Modal } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { auth, db } from '../../../FirebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import PhoneInput from 'react-native-phone-number-input';
-
-// Suppress the warning related to defaultProps in the CountryModal component
-LogBox.ignoreLogs([
-  'Warning: CountryModal: Support for defaultProps will be removed from function components in a future major release.'
-]);
 
 interface SignupProps {
   navigation: NavigationProp<any, any>;
@@ -21,22 +16,33 @@ const Signup: React.FC<SignupProps> = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [contactNumber, setContactNumber] = useState<string>('');
   const [formattedValue, setFormattedValue] = useState<string>('');
-  const phoneInput = React.useRef<PhoneInput>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const phoneInput = useRef<PhoneInput>(null);
 
   const handleSignup = async () => {
+    // Reset error message
+    setErrorMessage(null);
+
+    // Field validation
     if (!email || !password || !confirmPassword || !formattedValue) {
-      Alert.alert('Please fill in all fields');
+      setErrorMessage('Please fill in all fields');
       return;
     }
 
     if (password !== confirmPassword) {
-      Alert.alert('Passwords do not match');
+      setErrorMessage('Passwords do not match');
       return;
     }
 
     const passwordRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
     if (!passwordRegex.test(password)) {
-      Alert.alert('Password must be at least 8 characters long and contain at least one special character');
+      setErrorMessage('Password must be at least 8 characters long and contain at least one special character');
+      return;
+    }
+
+    if (!phoneInput.current?.isValidNumber(contactNumber)) {
+      setErrorMessage('Please enter a valid phone number');
       return;
     }
 
@@ -49,14 +55,22 @@ const Signup: React.FC<SignupProps> = ({ navigation }) => {
       await setDoc(doc(db, 'users', user.uid), {
         email,
         contactNumber: formattedValue,
-        isNewUser: true, // Flag to indicate that this is a new user
+        isNewUser: true,
       });
 
-      // Navigate to login screen
+      // Navigate to login screen only after successful Firestore update
       navigation.navigate('Login');
     } catch (error: any) {
+      let errorMessage = 'Signup failed. Please try again.';
+      if (error.code === 'auth/email-already-in-use') {
+        errorMessage = 'The email address is already in use.';
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = 'The email address is not valid.';
+      } else if (error.code === 'auth/weak-password') {
+        errorMessage = 'The password is too weak.';
+      }
       console.log(error);
-      Alert.alert('Signup failed: ' + error.message);
+      setErrorMessage(errorMessage);
     }
   };
 
@@ -115,6 +129,25 @@ const Signup: React.FC<SignupProps> = ({ navigation }) => {
       >
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
+
+      {errorMessage && (
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={true}
+          onRequestClose={() => setErrorMessage(null)}
+        >
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>{errorMessage}</Text>
+            <TouchableOpacity
+              style={[styles.button, styles.closeButton]}
+              onPress={() => setErrorMessage(null)}
+            >
+              <Text style={styles.buttonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+      )}
     </SafeAreaView>
   );
 };
@@ -167,6 +200,30 @@ const styles = StyleSheet.create({
   login: {
     backgroundColor: '#007bff',
     marginTop: 10,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontSize: 18,
+    color: '#333',
+  },
+  closeButton: {
+    backgroundColor: '#ff6347',
   },
 });
 
