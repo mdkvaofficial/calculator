@@ -7,7 +7,7 @@ import NewUserDashboard from './screens/newUserDashboard';
 import Dashboard from './screens/dashboard';
 import SearchCompanies from './screens/searchCompanies';
 import Settings from './screens/settings';
-import AcceptCandidatesScreen from './screens/acceptCandidatesScreen';
+import AcceptCandidates from './screens/acceptCandidates';
 import AttendanceScreen from './screens/attendanceScreen';
 import ChatbotScreen from './screens/chatbotScreen';
 import ChatScreen from './screens/chatScreen';
@@ -29,7 +29,7 @@ const Index = () => {
         <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen name="SearchCompanies" component={SearchCompanies} />
         <Stack.Screen name="Settings" component={Settings} />
-        <Stack.Screen name="AcceptCandidatesScreen" component={AcceptCandidatesScreen} />
+        <Stack.Screen name="AcceptCandidates" component={AcceptCandidates} />
         <Stack.Screen name="AttendanceScreen" component={AttendanceScreen} />
         <Stack.Screen name="ChatbotScreen" component={ChatbotScreen} />
         <Stack.Screen name="ChatScreen" component={ChatScreen} />
