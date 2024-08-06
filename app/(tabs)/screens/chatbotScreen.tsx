@@ -97,7 +97,7 @@ const ChatbotScreen: React.FC<ChatbotProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#121212',
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         fontSize: 36,
-        color: '#333',
+        color: '#ffffff',
         marginBottom: 40,
         position: 'absolute',
         top: 60,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     },
     userText: {
         fontSize: 18,
-        color: '#333',
+        color: '#ffffff',
         marginTop: 10,
         textAlign: 'center',
     },
@@ -127,20 +127,20 @@ const styles = StyleSheet.create({
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#007bff',
+        backgroundColor: '#1976d2',
         marginTop: 20,
         borderRadius: 10,
         position: 'absolute',
         bottom: 40,
     },
     buttonText: {
-        color: '#fff',
+        color: '#ffffff',
         textAlign: 'center',
         fontSize: 18,
         fontWeight: '600',
     },
     dashboardButton: {
-        backgroundColor: '#28a745',
+        backgroundColor: '#388e3c',
     },
 });
 
@@ -150,22 +150,22 @@ const pickerSelectStyles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 10,
         borderWidth: 1,
-        borderColor: 'gray',
+        borderColor: '#555',
         borderRadius: 4,
-        color: '#333',
+        color: '#ffffff',
         paddingRight: 30, // to ensure the text is never behind the icon
-        backgroundColor: '#fff',
+        backgroundColor: '#2e2e2e',
     },
     inputAndroid: {
         fontSize: 16,
         paddingHorizontal: 10,
         paddingVertical: 8,
         borderWidth: 0.5,
-        borderColor: 'gray',
+        borderColor: '#555',
         borderRadius: 8,
-        color: '#333',
+        color: '#ffffff',
         paddingRight: 30, // to ensure the text is never behind the icon
-        backgroundColor: '#fff',
+        backgroundColor: '#2e2e2e',
     },
 });
 

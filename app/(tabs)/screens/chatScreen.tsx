@@ -8,17 +8,28 @@ import {
   FlatList,
 } from "react-native";
 import { NavigationProp } from "@react-navigation/native";
-import { db, auth } from '../../../FirebaseConfig';
-import { collection, addDoc, query, where, onSnapshot, getDoc, doc, orderBy } from "firebase/firestore";
-import { format } from 'date-fns';
+import { db, auth } from "../../../FirebaseConfig";
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  onSnapshot,
+  getDoc,
+  doc,
+  orderBy,
+} from "firebase/firestore";
+import { format } from "date-fns";
 
 interface ChatScreenProps {
   navigation: NavigationProp<any, any>;
 }
 
 const ChatScreen: React.FC<ChatScreenProps> = ({ navigation }) => {
-  const [message, setMessage] = useState<string>('');
-  const [messages, setMessages] = useState<Array<{ id: string; text: string; user: string; createdAt: any }>>([]);
+  const [message, setMessage] = useState<string>("");
+  const [messages, setMessages] = useState<
+    Array<{ id: string; text: string; user: string; createdAt: any }>
+  >([]);
   const [companyId, setCompanyId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const flatListRef = useRef<FlatList>(null);
@@ -26,21 +37,21 @@ const ChatScreen: React.FC<ChatScreenProps> = ({ navigation }) => {
   useEffect(() => {
     const fetchUserCompany = async () => {
       try {
-        const userDocRef = doc(db, 'users', auth.currentUser?.uid!);
+        const userDocRef = doc(db, "users", auth.currentUser?.uid!);
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
           const userData = userDoc.data();
           if (userData && userData.companyId) {
             setCompanyId(userData.companyId);
           } else {
-            setError('No company associated with this user.');
+            setError("No company associated with this user.");
           }
         } else {
-          setError('User data not found.');
+          setError("User data not found.");
         }
       } catch (error) {
-        console.error('Error fetching user company: ', error);
-        setError('Error fetching user company.');
+        console.error("Error fetching user company: ", error);
+        setError("Error fetching user company.");
       }
     };
 
@@ -50,9 +61,18 @@ const ChatScreen: React.FC<ChatScreenProps> = ({ navigation }) => {
   useEffect(() => {
     if (companyId) {
       const fetchMessages = () => {
-        const q = query(collection(db, 'messages'), where('companyId', '==', companyId), orderBy('createdAt', 'asc'));
+        const q = query(
+          collection(db, "messages"),
+          where("companyId", "==", companyId),
+          orderBy("createdAt", "asc")
+        );
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
-          const messagesList: Array<{ id: string; text: string; user: string; createdAt: any }> = [];
+          const messagesList: Array<{
+            id: string;
+            text: string;
+            user: string;
+            createdAt: any;
+          }> = [];
           querySnapshot.forEach((doc) => {
             messagesList.push({ id: doc.id, ...doc.data() } as any);
           });
@@ -72,20 +92,20 @@ const ChatScreen: React.FC<ChatScreenProps> = ({ navigation }) => {
   const sendMessage = async () => {
     if (message.trim() && companyId) {
       try {
-        const user = auth.currentUser?.email || 'Anonymous';
-        await addDoc(collection(db, 'messages'), {
+        const user = auth.currentUser?.email || "Anonymous";
+        await addDoc(collection(db, "messages"), {
           text: message,
           user: user,
           companyId: companyId,
           createdAt: new Date(),
         });
-        setMessage('');
+        setMessage("");
         if (flatListRef.current) {
           flatListRef.current.scrollToEnd({ animated: true });
         }
       } catch (error) {
-        console.error('Error sending message: ', error);
-        setError('Error sending message.');
+        console.error("Error sending message: ", error);
+        setError("Error sending message.");
       }
     }
   };
@@ -101,7 +121,9 @@ const ChatScreen: React.FC<ChatScreenProps> = ({ navigation }) => {
           <View style={styles.messageContainer}>
             <Text style={styles.messageUser}>{item.user}</Text>
             <Text style={styles.messageText}>{item.text}</Text>
-            <Text style={styles.messageTime}>{format(new Date(item.createdAt.seconds * 1000), 'hh:mm a')}</Text>
+            <Text style={styles.messageTime}>
+              {format(new Date(item.createdAt.seconds * 1000), "hh:mm a")}
+            </Text>
           </View>
         )}
         ref={flatListRef}
@@ -109,12 +131,15 @@ const ChatScreen: React.FC<ChatScreenProps> = ({ navigation }) => {
       />
       <TextInput
         placeholder="Type your message"
-        placeholderTextColor="#666"
+        placeholderTextColor="#999"
         style={styles.inputData}
         value={message}
         onChangeText={setMessage}
       />
-      <TouchableOpacity style={[styles.button, styles.sendButton]} onPress={sendMessage}>
+      <TouchableOpacity
+        style={[styles.button, styles.sendButton]}
+        onPress={sendMessage}
+      >
         <Text style={styles.buttonText}>Send</Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -131,7 +156,7 @@ const ChatScreen: React.FC<ChatScreenProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#121212",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -141,12 +166,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     fontSize: 36,
-    color: "#333",
+    color: "#ffffff",
     marginBottom: 40,
   },
   inputData: {
-    backgroundColor: "#fff",
-    color: "#333",
+    backgroundColor: "#1e1e1e",
+    color: "#ffffff",
     textAlign: "left",
     width: "100%",
     height: 40,
@@ -154,7 +179,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 15,
     fontSize: 16,
-    borderColor: '#ddd',
+    borderColor: "#333",
     borderWidth: 1,
   },
   button: {
@@ -162,12 +187,12 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#34c759",
+    backgroundColor: "#388e3c",
     borderRadius: 10,
     marginBottom: 20,
   },
   buttonText: {
-    color: "#fff",
+    color: "#ffffff",
     textAlign: "center",
     fontSize: 18,
     fontWeight: "600",
@@ -176,33 +201,33 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   sendButton: {
-    backgroundColor: "#007bff",
+    backgroundColor: "#1976d2",
   },
   messageContainer: {
-    backgroundColor: "#fff",
+    backgroundColor: "#1e1e1e",
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
     width: "100%",
-    borderColor: '#ddd',
+    borderColor: "#333",
     borderWidth: 1,
   },
   messageUser: {
-    color: "#333",
+    color: "#ffffff",
     fontWeight: "bold",
   },
   messageText: {
-    color: "#333",
+    color: "#ffffff",
   },
   messageTime: {
-    color: "#666",
+    color: "#999",
     fontSize: 12,
     textAlign: "right",
   },
   errorText: {
-    color: 'red',
+    color: "red",
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });
 

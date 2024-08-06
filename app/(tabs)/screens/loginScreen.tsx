@@ -42,14 +42,14 @@ const Login: React.FC = () => {
 
       <TextInput
         placeholder='Email'
-        placeholderTextColor="#666"
+        placeholderTextColor="#ccc"
         style={styles.inputData}
         value={email}
         onChangeText={setEmail}
       />
       <TextInput
         placeholder='Password'
-        placeholderTextColor="#666"
+        placeholderTextColor="#ccc"
         style={styles.inputData}
         secureTextEntry
         value={password}
@@ -82,7 +82,7 @@ const Login: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#121212',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -92,12 +92,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 32,
-    color: '#333',
+    color: '#ffffff',
     marginBottom: 40,
   },
   inputData: {
-    backgroundColor: '#fff',
-    color: '#333',
+    backgroundColor: '#1e1e1e',
+    color: '#ffffff',
     textAlign: 'left',
     width: '100%',
     height: 50,
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 15,
     fontSize: 16,
-    borderColor: '#ddd',
+    borderColor: '#333',
     borderWidth: 1,
   },
   button: {
@@ -117,19 +117,19 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   buttonText: {
-    color: '#fff',
+    color: '#ffffff',
     textAlign: 'center',
     fontSize: 18,
     fontWeight: '600',
   },
   loginButton: {
-    backgroundColor: '#007bff',
+    backgroundColor: '#1976d2',
   },
   signupButton: {
-    backgroundColor: '#28a745',
+    backgroundColor: '#388e3c',
   },
   forgotPasswordButton: {
-    backgroundColor: '#dc3545',
+    backgroundColor: '#d32f2f',
     marginTop: 10,
   },
 });

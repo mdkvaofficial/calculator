@@ -8,7 +8,7 @@ interface AcceptCandidatesProps {
     navigation: NavigationProp<any, any>;
 }
 
-const AcceptCandidates: React.FC<RAcceptCandidatesProps> = ({ navigation }) => {
+const AcceptCandidates: React.FC<AcceptCandidatesProps> = ({ navigation }) => {
     const [joinRequests, setJoinRequests] = useState<Array<{ id: string; userId: string; userEmail: string; companyId: string; companyName: string; status: string; description: string }>>([]);
     const [companyId, setCompanyId] = useState<string | null>(null);
 
@@ -132,7 +132,7 @@ const AcceptCandidates: React.FC<RAcceptCandidatesProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#121212',
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         fontSize: 36,
-        color: '#333',
+        color: '#ffffff',
         marginBottom: 40,
     },
     button: {
@@ -150,28 +150,28 @@ const styles = StyleSheet.create({
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#007bff',
+        backgroundColor: '#1976d2',
         marginBottom: 20,
         borderRadius: 10,
     },
     buttonText: {
-        color: '#fff',
+        color: '#ffffff',
         textAlign: 'center',
         fontSize: 18,
         fontWeight: '600',
     },
     dashboard: {
-        backgroundColor: '#28a745',
+        backgroundColor: '#388e3c',
     },
     requestContainer: {
-        backgroundColor: '#fff',
+        backgroundColor: '#1e1e1e',
         padding: 20,
         borderRadius: 10,
         marginBottom: 20,
         width: '100%',
     },
     requestText: {
-        color: '#333',
+        color: '#ffffff',
         marginBottom: 10,
     },
     buttonContainer: {
@@ -179,12 +179,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     acceptButton: {
-        backgroundColor: '#28a745',
+        backgroundColor: '#388e3c',
         flex: 1,
         marginRight: 10,
     },
     rejectButton: {
-        backgroundColor: '#dc3545',
+        backgroundColor: '#d32f2f',
         flex: 1,
         marginLeft: 10,
     },

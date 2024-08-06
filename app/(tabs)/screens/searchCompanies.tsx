@@ -84,6 +84,7 @@ const SearchCompanies: React.FC<FilterCompaniesProps> = ({ navigation }) => {
                         <TextInput
                             style={styles.textInput}
                             placeholder="Write a brief description about yourself"
+                            placeholderTextColor="#999"
                             value={description}
                             onChangeText={setDescription}
                             multiline
@@ -109,7 +110,7 @@ const SearchCompanies: React.FC<FilterCompaniesProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#121212',
         flex: 1,
         alignItems: 'center',
         padding: 20,
@@ -117,22 +118,22 @@ const styles = StyleSheet.create({
     headings: {
         fontWeight: 'bold',
         fontSize: 36,
-        color: '#333',
+        color: '#ffffff',
         marginBottom: 20,
         textAlign: 'center',
     },
     companyContainer: {
         padding: 20,
         marginVertical: 10,
-        backgroundColor: '#fff',
+        backgroundColor: '#1e1e1e',
         borderRadius: 10,
         width: '100%',
         alignItems: 'center',
-        borderColor: '#ddd',
+        borderColor: '#444',
         borderWidth: 1,
     },
     companyName: {
-        color: '#333',
+        color: '#ffffff',
         fontSize: 24,
         fontWeight: '500',
     },
@@ -145,44 +146,46 @@ const styles = StyleSheet.create({
     modalContainer: {
         width: 300,
         padding: 20,
-        backgroundColor: '#fff',
+        backgroundColor: '#1e1e1e',
         borderRadius: 10,
     },
     modalTitle: {
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 10,
-        color: '#333',
+        color: '#ffffff',
     },
     textInput: {
         borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: '#444',
         borderRadius: 10,
         padding: 10,
         marginBottom: 20,
         height: 80,
         textAlignVertical: 'top',
+        backgroundColor: '#2e2e2e',
+        color: '#ffffff',
     },
     button: {
         width: 200,
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#007bff',
+        backgroundColor: '#1976d2',
         marginBottom: 20,
         borderRadius: 10,
     },
     buttonText: {
-        color: '#fff',
+        color: '#ffffff',
         textAlign: 'center',
         fontSize: 18,
         fontWeight: '600',
     },
     submitButton: {
-        backgroundColor: '#28a745',
+        backgroundColor: '#388e3c',
     },
     closeButton: {
-        backgroundColor: '#dc3545',
+        backgroundColor: '#d32f2f',
     },
 });
 

@@ -104,7 +104,7 @@ const NewUserDashboard: React.FC<DashboardProps> = ({ navigation }) => {
                         <TextInput
                             style={styles.input}
                             placeholder="Company Name"
-                            placeholderTextColor="#666"
+                            placeholderTextColor="#999"
                             value={companyName}
                             onChangeText={(text) => {
                                 setCompanyName(text);
@@ -134,7 +134,7 @@ const NewUserDashboard: React.FC<DashboardProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#121212',
         margin: 0,
         padding: 0,
         flex: 1,
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         fontSize: 18,
-        color: '#333',
+        color: '#ffffff',
         marginBottom: 20,
     },
     heading2: {
@@ -161,22 +161,22 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     buttonText: {
-        color: '#fff',
+        color: '#ffffff',
         textAlign: 'center',
         fontSize: 18,
         fontWeight: '600',
     },
     JoinCompany: {
-        backgroundColor: '#007bff',
+        backgroundColor: '#1976d2',
     },
     CreateCompany: {
-        backgroundColor: '#28a745',
+        backgroundColor: '#388e3c',
     },
     Chatbot: {
-        backgroundColor: '#ffc107',
+        backgroundColor: '#fbc02d',
     },
     Logout: {
-        backgroundColor: '#dc3545',
+        backgroundColor: '#d32f2f',
     },
     modalOverlay: {
         flex: 1,
@@ -187,23 +187,23 @@ const styles = StyleSheet.create({
     modalContainer: {
         width: 300,
         padding: 20,
-        backgroundColor: '#fff',
+        backgroundColor: '#1e1e1e',
         borderRadius: 10,
     },
     modalTitle: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: '#333',
+        color: '#ffffff',
         marginBottom: 10,
     },
     input: {
         height: 40,
-        borderColor: '#ccc',
+        borderColor: '#444',
         borderWidth: 1,
         marginBottom: 10,
         paddingHorizontal: 10,
-        color: '#333',
-        backgroundColor: '#f9f9f9',
+        color: '#ffffff',
+        backgroundColor: '#2e2e2e',
         borderRadius: 5,
     },
     modalButtons: {
@@ -215,11 +215,11 @@ const styles = StyleSheet.create({
         height: 40,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#007bff',
+        backgroundColor: '#1976d2',
         borderRadius: 5,
     },
     errorText: {
-        color: '#dc3545',
+        color: '#f44336',
         marginBottom: 10,
         textAlign: 'center',
     },

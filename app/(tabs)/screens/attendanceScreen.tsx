@@ -159,7 +159,7 @@ const AttendanceScreen: React.FC<AttendanceDashboardProps> = ({ navigation }) =>
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#121212',
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         fontSize: 36,
-        color: '#333',
+        color: '#ffffff',
         marginBottom: 40,
     },
     button: {
@@ -177,18 +177,18 @@ const styles = StyleSheet.create({
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#007bff',
+        backgroundColor: '#1976d2',
         marginBottom: 20,
         borderRadius: 10,
     },
     buttonText: {
-        color: '#fff',
+        color: '#ffffff',
         textAlign: 'center',
         fontSize: 18,
         fontWeight: '600',
     },
     dashboard: {
-        backgroundColor: '#28a745',
+        backgroundColor: '#388e3c',
     },
     modalOverlay: {
         flex: 1,
@@ -199,29 +199,29 @@ const styles = StyleSheet.create({
     modalContainer: {
         width: 300,
         padding: 20,
-        backgroundColor: '#fff',
+        backgroundColor: '#1e1e1e',
         borderRadius: 10,
     },
     modalTitle: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: '#333',
+        color: '#ffffff',
         marginBottom: 10,
     },
     recordContainer: {
-        backgroundColor: '#f9f9f9',
+        backgroundColor: '#2e2e2e',
         borderRadius: 10,
         padding: 10,
         marginBottom: 10,
     },
     recordText: {
-        color: '#333',
+        color: '#ffffff',
     },
     closeButton: {
-        backgroundColor: '#dc3545',
+        backgroundColor: '#d32f2f',
     },
     errorText: {
-        color: '#dc3545',
+        color: '#f44336',
         marginBottom: 20,
         textAlign: 'center',
     },

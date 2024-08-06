@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { db, auth } from '../../../FirebaseConfig';
 import { doc, getDoc } from 'firebase/firestore';
@@ -120,7 +120,7 @@ const Dashboard: React.FC<DashboardProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#121212',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -130,17 +130,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 36,
-    color: '#333',
+    color: '#ffffff',
     marginBottom: 10,
   },
   roleText: {
     fontSize: 20,
-    color: '#555',
+    color: '#bbbbbb',
     marginBottom: 10,
   },
   emailText: {
     fontSize: 18,
-    color: '#007bff',
+    color: '#1e88e5',
     marginBottom: 40,
     textDecorationLine: 'underline',
   },
@@ -149,21 +149,21 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#007bff',
+    backgroundColor: '#1976d2',
     marginBottom: 20,
     borderRadius: 10,
   },
   buttonText: {
-    color: '#fff',
+    color: '#ffffff',
     textAlign: 'center',
     fontSize: 18,
     fontWeight: '600',
   },
   settings: {
-    backgroundColor: '#28a745',
+    backgroundColor: '#388e3c',
   },
   logout: {
-    backgroundColor: '#dc3545',
+    backgroundColor: '#d32f2f',
   },
   modalBackground: {
     flex: 1,
@@ -174,13 +174,13 @@ const styles = StyleSheet.create({
   modalContainer: {
     width: 300,
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#1e1e1e',
     borderRadius: 10,
     alignItems: 'center',
   },
   modalText: {
     fontSize: 18,
-    color: '#000',
+    color: '#ffffff',
     marginBottom: 20,
   },
   closeButton: {
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#007bff',
+    backgroundColor: '#1976d2',
     borderRadius: 10,
   },
 });
