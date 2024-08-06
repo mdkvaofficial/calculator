@@ -4,11 +4,11 @@ import { NavigationProp } from '@react-navigation/native';
 import { db, auth } from '../../../FirebaseConfig';
 import { collection, getDocs, updateDoc, doc, query, where, getDoc } from 'firebase/firestore';
 
-interface ResumesDashboardProps {
+interface SearchCompaniesScreenProps {
     navigation: NavigationProp<any, any>;
 }
 
-const ResumesScreen: React.FC<ResumesDashboardProps> = ({ navigation }) => {
+const SearchCompaniesScreen: React.FC<SearchCompaniesScreenProps> = ({ navigation }) => {
     const [joinRequests, setJoinRequests] = useState<Array<{ id: string; userId: string; userEmail: string; companyId: string; companyName: string; status: string; description: string }>>([]);
     const [companyId, setCompanyId] = useState<string | null>(null);
 
@@ -190,4 +190,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ResumesScreen;
+export default SearchCompaniesScreen;
