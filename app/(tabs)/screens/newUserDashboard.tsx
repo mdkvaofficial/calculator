@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, TextInput } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
-import { db, auth } from '../../../FirebaseConfig';
+import { db, auth } from '../../../FirebaseConfig'; // Ensure you import auth as well
 import { collection, addDoc, doc, updateDoc, query, where, getDocs } from 'firebase/firestore';
 
 interface DashboardProps {
@@ -44,24 +44,18 @@ const NewUserDashboard: React.FC<DashboardProps> = ({ navigation }) => {
             });
             console.log('Company Document written with ID: ', companyDocRef.id);
 
-            // Directly update user document using auth.currentUser.uid
-            if (auth.currentUser?.uid) {
-                const userDocRef = doc(db, 'users', auth.currentUser.uid);
+            // Update user role to "Employer"
+            const userDocRef = doc(db, 'users', auth.currentUser?.uid!);
+            await updateDoc(userDocRef, {
+                role: 'Employer',
+                companyId: companyDocRef.id,
+            });
 
-                await updateDoc(userDocRef, {
-                    role: 'Employer',
-                    companyId: companyDocRef.id,
-                });
-
-                console.log('User role and company updated successfully.');
-                setModalVisible(false);
-                navigation.navigate('Dashboard'); // Navigate to Dashboard after creation
-            } else {
-                throw new Error('User is not authenticated.');
-            }
+            setModalVisible(false);
+            navigation.navigate('Dashboard'); // Navigate to Dashboard after creation
         } catch (error) {
             console.error('Error adding document: ', error);
-            setError('Error creating company. Please try again.');
+            alert('Error creating company. Please try again.');
         }
     };
 

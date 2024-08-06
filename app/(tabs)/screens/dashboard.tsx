@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { db, auth } from '../../../FirebaseConfig';
 import { doc, getDoc } from 'firebase/firestore';
@@ -63,7 +63,7 @@ const Dashboard: React.FC<DashboardProps> = ({ navigation }) => {
       {userRole === 'Employer' && (
         <TouchableOpacity
           style={[styles.button]}
-          onPress={() => { navigation.navigate('ResumeScreen'); }}
+          onPress={() => { navigation.navigate('AcceptCandidatesScreen'); }}
         >
           <Text style={styles.buttonText}>Accept Candidates</Text>
         </TouchableOpacity>

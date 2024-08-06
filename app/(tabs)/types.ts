@@ -5,13 +5,12 @@ export type RootStackParamList = {
     Dashboard: undefined;
     SearchCompanies: undefined;
     Settings: undefined;
-    SearchCompaniesScreen: undefined;
+    ResumeScreen: undefined;
     AttendanceScreen: undefined;
     ChatbotScreen: undefined;
     ChatScreen: undefined;
     LeaveApplicationScreen: undefined;
     ForgotPasswordScreen: undefined;
     VerifyContactScreen: undefined;
-    NewPasswordScreen: undefined;
   };
   
