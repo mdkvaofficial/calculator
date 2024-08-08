@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
+import { Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import { auth, db } from '../../../FirebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
@@ -38,6 +38,10 @@ const Login: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+     <Image
+        style={styles.logo}
+        source={require('../../../assets/images/noti_wave_logo.png')}
+      />
       <Text style={styles.headings}>HR-NotiWave</Text>
 
       <TextInput
@@ -131,6 +135,12 @@ const styles = StyleSheet.create({
   forgotPasswordButton: {
     backgroundColor: '#d32f2f',
     marginTop: 10,
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    position: 'relative',
+    bottom: 40,
   },
 });
 

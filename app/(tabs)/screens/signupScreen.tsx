@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { SafeAreaView, Text, StyleSheet, TouchableOpacity, TextInput, View, Modal } from 'react-native';
+import { SafeAreaView, Text, StyleSheet, TouchableOpacity, TextInput, View, Modal, Image } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { auth, db } from '../../../FirebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -76,6 +76,10 @@ const Signup: React.FC<SignupProps> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+        <Image
+        style={styles.logo}
+        source={require('../../../assets/images/noti_wave_logo.png')}
+      />
       <Text style={styles.headings}>Signup</Text>
 
       <TextInput
@@ -224,6 +228,12 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     backgroundColor: '#d32f2f',
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    position: 'relative',
+    bottom: 40,
   },
 });
 
