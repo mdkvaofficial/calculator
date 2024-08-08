@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   View,
   Text,
+  TextInput,
   StyleSheet,
   TouchableOpacity,
   Alert,
 } from "react-native";
 import { NavigationProp } from "@react-navigation/native";
-import { auth } from "../../../FirebaseConfig";
+import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import PhoneInput from "react-native-phone-number-input";
 import "react-native-country-picker-modal";
+import { auth, firebaseConfig, db } from "../../../FirebaseConfig"; // Ensure your FirebaseConfig is correctly set up
+import { PhoneAuthProvider } from 'firebase/auth';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 
 interface ForgotPasswordScreenProps {
   navigation: NavigationProp<any, any>;
@@ -18,11 +22,18 @@ interface ForgotPasswordScreenProps {
 const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({
   navigation,
 }) => {
+  const [email, setEmail] = useState<string>("");
   const [contactNumber, setContactNumber] = useState<string>("");
   const [formattedValue, setFormattedValue] = useState<string>("");
-  const phoneInput = React.useRef<PhoneInput>(null);
+  const phoneInput = useRef<PhoneInput>(null);
+  const recaptchaVerifier = useRef(null);
 
   const handleGetCode = async () => {
+    if (!email) {
+      Alert.alert("Error", "Please enter your email address");
+      return;
+    }
+
     if (!contactNumber) {
       Alert.alert("Error", "Please enter your contact number");
       return;
@@ -35,8 +46,22 @@ const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({
     }
 
     try {
-      const confirmation = await auth.signInWithPhoneNumber(formattedValue);
-      navigation.navigate("VerifyContactScreen", { confirmation });
+      // Check if email exists in Firestore
+      const usersRef = collection(db, "users");
+      const q = query(usersRef, where("email", "==", email));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        Alert.alert("Error", "Email address not found");
+        return;
+      }
+
+      const phoneProvider = new PhoneAuthProvider(auth);
+      const verificationId = await phoneProvider.verifyPhoneNumber(
+        formattedValue,
+        recaptchaVerifier.current
+      );
+      navigation.navigate("VerifyContactScreen", { verificationId, email }); // Pass email to VerifyContactScreen
     } catch (error: any) {
       console.error(error);
       Alert.alert("Error", "Failed to send verification code");
@@ -45,7 +70,22 @@ const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({
 
   return (
     <View style={styles.container}>
+      <FirebaseRecaptchaVerifierModal
+        ref={recaptchaVerifier}
+        firebaseConfig={firebaseConfig}
+      />
+
       <Text style={styles.headings}>Forgot Password</Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        placeholderTextColor="#666"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
 
       <PhoneInput
         ref={phoneInput}
@@ -87,6 +127,15 @@ const styles = StyleSheet.create({
     fontSize: 36,
     color: "#ffffff",
     marginBottom: 40,
+  },
+  input: {
+    width: "100%",
+    height: 50,
+    backgroundColor: "#ffffff",
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    marginBottom: 20,
+    fontSize: 18,
   },
   button: {
     width: 200,
