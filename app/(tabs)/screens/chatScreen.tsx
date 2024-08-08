@@ -122,7 +122,7 @@ const ChatScreen: React.FC<ChatScreenProps> = ({ navigation }) => {
             <Text style={styles.messageUser}>{item.user}</Text>
             <Text style={styles.messageText}>{item.text}</Text>
             <Text style={styles.messageTime}>
-              {format(new Date(item.createdAt.seconds * 1000), "hh:mm a")}
+              {format(new Date(item.createdAt.seconds * 1000), "PPpp")}
             </Text>
           </View>
         )}
