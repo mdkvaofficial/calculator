@@ -13,6 +13,7 @@ const NewUserDashboard: React.FC<DashboardProps> = ({ navigation }) => {
     const [companyName, setCompanyName] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [userEmail, setUserEmail] = useState<string | null>(null);
+    const [emailModalVisible, setEmailModalVisible] = useState(false);
 
     useEffect(() => {
         const fetchUserEmail = () => {
@@ -59,9 +60,21 @@ const NewUserDashboard: React.FC<DashboardProps> = ({ navigation }) => {
         }
     };
 
+    const handleEmailPress = () => {
+        setEmailModalVisible(true);
+    };
+
+    const handleCloseEmailModal = () => {
+        setEmailModalVisible(false);
+    };
+
     return (
         <View style={styles.container}>
-            <Text style={styles.heading1}>{userEmail ? userEmail : ''}</Text>
+            {userEmail && (
+                <TouchableOpacity onPress={handleEmailPress}>
+                    <Text style={styles.heading1}>{userEmail}</Text>
+                </TouchableOpacity>
+            )}
 
             <TouchableOpacity
                 style={[styles.button, styles.JoinCompany]}
@@ -128,6 +141,24 @@ const NewUserDashboard: React.FC<DashboardProps> = ({ navigation }) => {
                     </View>
                 </View>
             </Modal>
+
+            <Modal
+                transparent={true}
+                visible={emailModalVisible}
+                onRequestClose={handleCloseEmailModal}
+            >
+                <View style={styles.modalBackground}>
+                    <View style={styles.modalContainer}>
+                        <Text style={styles.modalText}>Email: {userEmail}</Text>
+                        <TouchableOpacity
+                            style={styles.closeButton}
+                            onPress={handleCloseEmailModal}
+                        >
+                            <Text style={styles.buttonText}>Close</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
         </View>
     );
 };
@@ -147,6 +178,9 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#ffffff',
         marginBottom: 20,
+        textDecorationLine: 'underline',
+        position: 'relative',
+        bottom: 150,
     },
     heading2: {
         fontSize: 36,
@@ -168,15 +202,26 @@ const styles = StyleSheet.create({
     },
     JoinCompany: {
         backgroundColor: '#1976d2',
+        position: 'relative',
+        left: 100,
+        top: 32,
     },
     CreateCompany: {
         backgroundColor: '#388e3c',
+        position: 'relative',
+        right: 100,
+        bottom: 35,
     },
     Chatbot: {
         backgroundColor: '#fbc02d',
+        position: 'relative',
+        top: 20,
+
     },
     Logout: {
         backgroundColor: '#d32f2f',
+        position: 'relative',
+        top: 160,
     },
     modalOverlay: {
         flex: 1,
@@ -222,6 +267,25 @@ const styles = StyleSheet.create({
         color: '#f44336',
         marginBottom: 10,
         textAlign: 'center',
+    },
+    modalBackground: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalText: {
+        fontSize: 18,
+        color: '#ffffff',
+        marginBottom: 20,
+    },
+    closeButton: {
+        width: '100%',
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#1976d2',
+        borderRadius: 10,
     },
 });
 
