@@ -4,11 +4,11 @@ import { NavigationProp } from '@react-navigation/native';
 import { db, auth } from '../../../FirebaseConfig'; // Ensure you import auth as well
 import { collection, addDoc, doc, updateDoc, query, where, getDocs } from 'firebase/firestore';
 
-interface DashboardProps {
+interface newUserDashboardProps {
     navigation: NavigationProp<any, any>;
 }
 
-const NewUserDashboard: React.FC<DashboardProps> = ({ navigation }) => {
+const NewUserDashboard: React.FC<newUserDashboardProps> = ({ navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [companyName, setCompanyName] = useState('');
     const [error, setError] = useState<string | null>(null);

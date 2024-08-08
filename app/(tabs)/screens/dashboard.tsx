@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Image } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { db, auth } from '../../../FirebaseConfig';
 import { doc, getDoc } from 'firebase/firestore';
+
 
 interface DashboardProps {
   navigation: NavigationProp<any, any>;
@@ -49,39 +50,45 @@ const Dashboard: React.FC<DashboardProps> = ({ navigation }) => {
       {userRole && <Text style={styles.roleText}>Role: {userRole}</Text>}
       {userEmail && (
         <TouchableOpacity onPress={handleEmailPress}>
-          <Text style={styles.emailText}>Email: {userEmail}</Text>
+          <Text style={styles.emailText}>{userEmail}</Text>
         </TouchableOpacity>
       )}
 
-      <TouchableOpacity
-        style={[styles.button]}
-        onPress={() => { navigation.navigate('AttendanceScreen'); }}
-      >
-        <Text style={styles.buttonText}>Attendance</Text>
-      </TouchableOpacity>
-
-      {userRole === 'Employer' && (
+      <View style={styles.gridContainer}>
         <TouchableOpacity
-          style={[styles.button]}
-          onPress={() => { navigation.navigate('AcceptCandidates'); }}
+          style={[styles.button, styles.gridItem]}
+          onPress={() => { navigation.navigate('AttendanceScreen'); }}
         >
-          <Text style={styles.buttonText}>Accept Candidates</Text>
+          <Image source={require('../../../assets/images/attendance.png')} style={styles.buttonImage} />
+          <Text style={styles.buttonText}>Attendance</Text>
         </TouchableOpacity>
-      )}
 
-      <TouchableOpacity
-        style={[styles.button]}
-        onPress={() => { navigation.navigate('ChatScreen'); }}
-      >
-        <Text style={styles.buttonText}>Chat Room</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, styles.gridItem]}
+          onPress={() => { navigation.navigate('ChatScreen'); }}
+        >
+          <Image source={require('../../../assets/images/chatRoom.png')} style={styles.buttonImage} />
+          <Text style={styles.buttonText}>Chat Room</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={[styles.button]}
-        onPress={() => { navigation.navigate('LeaveApplicationScreen'); }}
-      >
-        <Text style={styles.buttonText}>Leave Application</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, styles.gridItem]}
+          onPress={() => { navigation.navigate('LeaveApplicationScreen'); }}
+        >
+          <Image source={require('../../../assets/images/leaveApplications.png')} style={styles.buttonImage} />
+          <Text style={styles.buttonText}>Leave Application</Text>
+        </TouchableOpacity>
+
+        {userRole === 'Employer' && (
+          <TouchableOpacity
+            style={[styles.button, styles.gridItem]}
+            onPress={() => { navigation.navigate('AcceptCandidates'); }}
+          >
+            <Image source={require('../../../assets/images/acceptCandidates.png')} style={styles.buttonImage} />
+            <Text style={styles.buttonText}>Accept Candidates</Text>
+          </TouchableOpacity>
+        )}
+      </View>
 
       <TouchableOpacity
         style={[styles.button, styles.settings]}
@@ -144,26 +151,44 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     textDecorationLine: 'underline',
   },
+  gridContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
   button: {
-    width: 160,
-    height: 50,
+    width: 150,
+    height: 80,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#1976d2',
     marginBottom: 20,
     borderRadius: 10,
+    flexDirection: 'row',
   },
   buttonText: {
     color: '#ffffff',
     textAlign: 'center',
     fontSize: 18,
     fontWeight: '600',
+    marginLeft: 10,
+  },
+  buttonImage: {
+    width: 40,
+    height: 40,
+  },
+  gridItem: {
+    margin: 10,
   },
   settings: {
     backgroundColor: '#388e3c',
+    width: 200,
+    position: 'relative',
   },
   logout: {
     backgroundColor: '#d32f2f',
+    width: 200,
+    position: 'relative',
   },
   modalBackground: {
     flex: 1,
