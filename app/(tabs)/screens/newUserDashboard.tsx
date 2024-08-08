@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, TextInput, Image } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { db, auth } from '../../../FirebaseConfig'; // Ensure you import auth as well
 import { collection, addDoc, doc, updateDoc, query, where, getDocs } from 'firebase/firestore';
@@ -80,6 +80,7 @@ const NewUserDashboard: React.FC<DashboardProps> = ({ navigation }) => {
                 style={[styles.button, styles.JoinCompany]}
                 onPress={() => navigation.navigate('SearchCompanies')}
             >
+                <Image source={require('../../../assets/images/joinCompany.png')} style={styles.buttonImage} />
                 <Text style={styles.buttonText}>Join Company</Text>
             </TouchableOpacity>
 
@@ -87,6 +88,7 @@ const NewUserDashboard: React.FC<DashboardProps> = ({ navigation }) => {
                 style={[styles.button, styles.CreateCompany]}
                 onPress={() => setModalVisible(true)}
             >
+                <Image source={require('../../../assets/images/createCompany.png')} style={styles.buttonImage} />
                 <Text style={styles.buttonText}>Create Company</Text>
             </TouchableOpacity>
 
@@ -94,6 +96,7 @@ const NewUserDashboard: React.FC<DashboardProps> = ({ navigation }) => {
                 style={[styles.button, styles.Chatbot]}
                 onPress={() => { navigation.navigate('ChatbotScreen'); }}
             >
+                <Image source={require('../../../assets/images/chatbot.png')} style={styles.buttonImage} />
                 <Text style={styles.buttonText}>Chatbot</Text>
             </TouchableOpacity>
 
@@ -180,48 +183,51 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         textDecorationLine: 'underline',
         position: 'relative',
-        bottom: 150,
+        bottom: 100,
     },
-    heading2: {
-        fontSize: 36,
-        marginBottom: 40,
-    },
+
     button: {
-        width: 150,
-        height: 50,
+        width: 200,
+        height: 80,
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 20,
         borderRadius: 10,
+        flexDirection: 'row',
     },
     buttonText: {
         color: '#ffffff',
         textAlign: 'center',
         fontSize: 18,
         fontWeight: '600',
+        marginLeft: 10,
+    },
+    buttonImage: {
+        width: 50,
+        height: 60,
     },
     JoinCompany: {
         backgroundColor: '#1976d2',
         position: 'relative',
         left: 100,
-        top: 32,
+        top: 50,
     },
     CreateCompany: {
         backgroundColor: '#388e3c',
         position: 'relative',
         right: 100,
-        bottom: 35,
+        bottom: 50,
     },
     Chatbot: {
-        backgroundColor: '#fbc02d',
+        backgroundColor: 'orange',
         position: 'relative',
-        top: 20,
+        bottom: 40,
 
     },
     Logout: {
         backgroundColor: '#d32f2f',
         position: 'relative',
-        top: 160,
+        top: 120,
     },
     modalOverlay: {
         flex: 1,
