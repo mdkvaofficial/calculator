@@ -76,7 +76,7 @@ const Signup: React.FC<SignupProps> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-        <Image
+      <Image
         style={styles.logo}
         source={require('../../../assets/images/noti_wave_logo.png')}
       />

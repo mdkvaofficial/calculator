@@ -4,7 +4,6 @@ import { NavigationProp } from '@react-navigation/native';
 import { db, auth } from '../../../FirebaseConfig';
 import { doc, getDoc } from 'firebase/firestore';
 
-
 interface DashboardProps {
   navigation: NavigationProp<any, any>;
 }
@@ -154,22 +153,31 @@ const styles = StyleSheet.create({
   gridContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
   button: {
-    width: 150,
-    height: 80,
+    width: 160,
+    height: 100,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#1976d2',
+    backgroundColor: '#1f1f1f',
     marginBottom: 20,
-    borderRadius: 10,
-    flexDirection: 'row',
+    borderRadius: 12,
+    borderColor: '#333333',
+    borderWidth: 1,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
   },
   buttonText: {
     color: '#ffffff',
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600',
     marginLeft: 10,
   },
