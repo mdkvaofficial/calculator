@@ -2,53 +2,61 @@
     let total = 0;
     let console = "";
     let state = null;
+    let isNewInput = false;
+
     function resolveState() {
-        switch (state) {
-            case "add":
-                total += parseFloat(console);
-                console = "";
-                break;
-            case "substract":
-                total -= parseFloat(console);
-                console = "";
-                break;
-            case "multiply":
-                total *= parseFloat(console);
-                console = "";
-                break;
-            case "divide":
-                total /= parseFloat(console);
-                console = "";
-                break;
-            default:
-                total = parseFloat(console);
-                console = "";
-                break;
+        if (console !== "") {
+            switch (state) {
+                case "add":
+                    total += parseFloat(console);
+
+                    break;
+                case "substract":
+                    total -= parseFloat(console);
+
+                    break;
+                case "multiply":
+                    total *= parseFloat(console);
+
+                    break;
+                case "divide":
+                    total /= parseFloat(console);
+
+                    break;
+                default:
+                    total = parseFloat(console);
+
+                    break;
+            }
+            console = total.toString();
         }
     }
     function setOperation(operation) {
-        resolveState();
+        if (!isNewInput) {
+            resolveState();
+        }
         state = operation;
+        isNewInput = true;
     }
     function setValue(value) {
-        if (console.toString() == "0" || state == "equal") {
-            console = "";
+        if (isNewInput) {
+            console = value.toString();
+            isNewInput = false;
+        } else {
+            console += value.toString();
         }
-        if (state == "equal") {
-            state = null;
-        }
-        if (value == "C") {
-            total = 0;
-            state = null;
-            console = "";
-            return;
-        }
-        console = console + value;
     }
+
     function equal() {
         resolveState();
-        console = total;
         state = "equal";
+        isNewInput = true;
+    }
+    function clear() {
+        total = 0;
+        console = "";
+        state = null;
+        isNewInput = false;
     }
 </script>
 
@@ -173,13 +181,8 @@
                     >
                         .
                     </button>
-                    <button
-                        on:click={() => {
-                            setValue("C");
-                        }}
-                    >
-                        C
-                    </button>
+
+                    <button on:click={clear}> C </button>
                 </div>
             </div>
             <div class="equal">
