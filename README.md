@@ -1,38 +1,64 @@
-# create-svelte
+# Calculator
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+This is a simple **calculator application** built using **Svelte.js**. It performs basic arithmetic operations such as addition, subtraction, multiplication, and division. The calculator is lightweight, fast, and demonstrates how to build interactive web applications using Svelte.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **Addition**: Add two or more numbers.
+- **Subtraction**: Subtract one number from another.
+- **Multiplication**: Multiply numbers together.
+- **Division**: Divide one number by another.
+- **Clear**: Reset the calculator display and start a new calculation.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Installation and Usage
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+Follow these steps to run the calculator application locally:
 
-## Developing
+1. **Clone the repository**  
+   Run the following command in your terminal to clone this repository:
+   ```bash
+   git clone https://github.com/mdkvaofficial/calculator.git
+   ```
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+2. **Navigate to the project directory**  
+   ```bash
+   cd calculator
+   ```
 
-```bash
-npm run dev
+3. **Install dependencies**  
+   Install the required dependencies by running:
+   ```bash
+   npm install
+   ```
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+4. **Run the development server**  
+   Start the development server to view the calculator locally:
+   ```bash
+   npm run dev
+   ```
 
-## Building
+5. **Access the calculator**  
+   Open your browser and go to `http://localhost:5173` (or whichever port your terminal specifies) to use the calculator.
 
-To create a production version of your app:
+## Technologies Used
 
-```bash
-npm run build
-```
+- **Svelte.js** - A fast and efficient JavaScript framework for building interactive user interfaces.
+- **JavaScript (ES6+)** - Logic for handling arithmetic operations.
+- **HTML/CSS** - Structure and styling of the calculator.
 
-You can preview the production build with `npm run preview`.
+## Future Improvements
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- Add support for advanced functions like percentage and square root.
+- Implement keyboard support for entering numbers and operators.
+- Enhance the UI/UX with better styling and responsive design.
+
+## Contributions
+
+Contributions are welcome! If you want to improve the calculator or add new features, feel free to fork the repository and submit a pull request. Here's how:
+
+1. Fork the repository.
+2. Create a feature branch (`git checkout -b feature/new-feature`).
+3. Commit your changes (`git commit -m 'Add new feature'`).
+4. Push to the branch (`git push origin feature/new-feature`).
+5. Open a pull request.
+
